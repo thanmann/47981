@@ -5,6 +5,7 @@
  */
 
 #include <windows.h>
+#include <iomanip>
 #include <iostream>
 #include <ctime>
 #include <fstream>
@@ -20,42 +21,52 @@ static CONSOLE_SCREEN_BUFFER_INFO csbi;
 using namespace std;
 
 //Global Constants
-const char WIDTH = 30, HEIGHT = 30;
+
 
 
 //Function Prototypes
-unsigned char map1[HEIGHT][WIDTH]=  
+unsigned char map1[30][30]=  
                    {"############################",
                     "#@   #   *  #              #",
                     "# #   ######  #### ####### #",
                     "# #*   #       #    ##     #",
                     "# ###  #  ######*    #*  # #",
-                    "#   *#     !########  #  # #",
+                    "#   *#   #  ########  #  # #",
                     "# ##  #     #      #  #  # #",
                     "# #*      *###  #  #  #  # #",
                     "# #########*    #  ####  # #",
                     "#            #  #*      *# #",
-                    "############## *########## #",
-                    "#                          #",
-                    "#                          #",
-                    "#                          #",
+                    "### ##### #### *########## #",
+                    "###   # # #  #    #    ##  #",
+                    "##   ###     ### ## # # #  #",
+                    "####           #  ##  #   !#",
                     "############################"};
+unsigned char map2[30][30]=  
+                   {"############################", 
+                    "#!   ##     # ##############", 
+                    "##       #  #              #", 
+                    "### ######     ######## #  #", 
+                    "#####    #######    #   #  #", 
+                    "# ### ##         #  #   #  #", 
+                    "##    ## #########  #   #  #", 
+                    "##               ##  ###   #", 
+                    "###   ########    #        #", 
+                    "###  ########     ##########", 
+                    "### ####      ###   ##     #",
+                    "#####  # ##########    ### #",
+                    "######## ################# #",
+                    "#@                         #",
+                    "############################",};
 
-unsigned char currentMap[HEIGHT][WIDTH];
-void printMap(int, int);
 void clear();
-//char player = '@';
-//int playerX = 1, playerY = 1;
-int timer(int, int);
+float timer(float,float,bool);
 void LevelMenu();
 
 int main(int argc, char** argv) {
     
     //Declare variables
-    int minutes,seconds;
     string newPlayer;
-    int width, height,userinput ;
-    int left,right,up,down;
+    int mChoice,sec,min;
     bool gameOver = false;
     int HP=0, MaxHp=100, gamespeed=100;
     char ans, choice;
@@ -75,31 +86,27 @@ int main(int argc, char** argv) {
                 << endl << endl << endl;
     cout << "Are you new to the game?" << endl;
     cin >> choice;
+    
+    //Level choice for player
     if (choice == 'Y' || choice == 'y'){
         cout << "What is your first name?" << endl;
         cin >> newPlayer;
         fout << newPlayer << endl;
         LevelMenu();
-        cin >> userinput;
+        cin >> mChoice;
         
     } else{
            LevelMenu();
-           cin >> userinput;
-}          
-                   
-    
-
-    
-    
-while (gameOver == false && choice == 1){
+           cin >> mChoice;
+}             
+   while (gameOver == false && mChoice == 1){
         for( int y=0;y<30;y++){
-           cout << map1[y];
-        }
-      clear();
-      //timer(minutes,seconds);
+           cout << map1[y] << endl;  
+        }        
     for(int y = 0;y < 30;y++){
         for(int x = 0; x < 30;x++){
             
+
             switch(map1[y][x]){
                   case '#':{
                       map1[y][x] = 219;
@@ -107,13 +114,13 @@ while (gameOver == false && choice == 1){
               case '@':
               { //Arrow Mapping for Up Key
                 if (GetAsyncKeyState (VK_UP) != 0){                    
-                     int y2 = (y+1);
+                     int y2 = (y-1);
                   
                   switch (map1[y2][x]){
                          case ' ':
                               {
                                   map1[y][x] = ' ';
-                                  y += 1;
+                                  y -= 1;
                                   map1[y2][x]= '@';
                                   }break;
                       case '!':{
@@ -122,7 +129,7 @@ while (gameOver == false && choice == 1){
                       case '*':{//Loss of HP
                                   HP -= 20;
                                   map1[y][x] = ' ';
-                                  y += 1;
+                                  y -= 1;
                                   map1[y2][x]= '@';
                       }break;
                          }
@@ -135,7 +142,7 @@ while (gameOver == false && choice == 1){
                         case ' ':{
                                  map1[y][x] = ' ';
                                  y += 1;
-                                 map1[y2][x]= '@'; 
+                                 map1[y2][x]= '@';
                         }break;
                         case '!':{
                             gameOver=true;
@@ -184,56 +191,194 @@ while (gameOver == false && choice == 1){
                                   HP -= 20;
                                   map1[y][x] = ' ';
                                   x -= 1;
-                                  map1[y][x2]= '@';
+                                  map1[y][x2]= '@';  
                         }break;
                     }
                 }
                 
                 }break;
              }
+              for(int i = 0;i <= 60;i++){
+        sec = i;
+        min = 0;
+        if(sec == 60 || gameOver == false){
+            min += 1;           
+        }
+        
+    }
          }
        }
-       
     Sleep(gamespeed);
+    clear();
+    }
+ while (gameOver == false && mChoice == 2){
+        for( int y=0;y<30;y++){
+           cout << map2[y] << endl;  
+        }        
+    for(int y = 0;y < 30;y++){
+        for(int x = 0; x < 30;x++){
+            
+
+            switch(map2[y][x]){
+                  case '#':{
+                      map2[y][x] = 219;
+                  }
+              case '@':
+              { //Arrow Mapping for Up Key
+                if (GetAsyncKeyState (VK_UP) != 0){                    
+                     int y2 = (y-1);
+                  
+                  switch (map2[y2][x]){
+                         case ' ':
+                              {
+                                  map2[y][x] = ' ';
+                                  y -= 1;
+                                  map2[y2][x]= '@';
+                                  }break;
+                      case '!':{
+                          gameOver=true;
+                      }break;
+                      case '*':{//Loss of HP
+                                  HP -= 20;
+                                  map2[y][x] = ' ';
+                                  y -= 1;
+                                  map2[y2][x]= '@';
+                      }break;
+                         }
+                   }//Arrow Mapping for Down Key
+                if(GetAsyncKeyState (VK_DOWN) != 0){
+                    
+                    int y2 = (y + 1);
+                    
+                    switch(map2[y2][x]){
+                        case ' ':{
+                                 map2[y][x] = ' ';
+                                 y += 1;
+                                 map2[y2][x]= '@';
+                        }break;
+                        case '!':{
+                            gameOver=true;
+                        }break;
+                        case '*':{//Loss of HP
+                                  HP -= 20;
+                                  map2[y][x] = ' ';
+                                  y += 1;
+                                  map2[y2][x]= '@';
+                        }break;
+                    }
+                } //Arrow Mapping for Right Key
+                if (GetAsyncKeyState (VK_RIGHT) != 0){
+                    int x2 = (x + 1);
+                    
+                    switch(map2[y][x2]){
+                        case ' ':{
+                                 map2[y][x] = ' ';
+                                 x += 1;
+                                 map2[y][x2]= '@';
+                        }break;
+                        case '!':{
+                            gameOver=true;
+                        }break;
+                        case '*':{//Loss of HP
+                                  HP -= 20;
+                                  map2[y][x] = ' ';
+                                  x += 1;
+                                  map2[y][x2]= '@';
+                        }break;
+                    }
+                } //Arrow Mapping for Left Key
+                if (GetAsyncKeyState (VK_LEFT) !=0){
+                    int x2 = (x - 1);
+                    
+                    switch (map2[y][x2]){
+                        case ' ':{
+                                  map2[y][x] = ' ';
+                                  x -= 1;
+                                  map2[y][x2]= '@';
+                        }break;
+                        case '!':{
+                           gameOver=true;
+                        }break;
+                        case '*':{//Loss of HP
+                                  HP -= 20;
+                                  map2[y][x] = ' ';
+                                  x -= 1;
+                                  map2[y][x2]= '@';  
+                        }break;
+                    }
+                }
+                
+                }break;
+             }
+              for(int i = 0;i <= 60;i++){
+        sec = i;
+        min = 0;
+        if(sec == 60){
+            min++;
+            sec = 0;
+        }
+        
+    }
+         }
+       }
+    Sleep(gamespeed);
+    clear();
     }cout << "Would you like to play the game again?" << endl;
     cin >> ans;
+    cout << min << ":" << sec << endl;
+
  }while (ans == 'Y' || ans == 'y');
-   system("PAUSE");
-   return EXIT_SUCCESS;
+ 
+ return 0;
 }
 
 void LevelMenu(){
      cout << "Which map would you like to choose?" << endl;
      cout << "Map 1: " << endl << endl
-            <<      "############################\n" 
-            <<      "#      *  #                #\n" 
-            <<      "# #   ######  #### ####### #\n" 
-            <<      "# #*   #       #    ##     #\n" 
-            <<      "# ###  #  ######*    #*  # #\n" 
-            <<      "#   *#     !########  #  # #\n" 
-            <<      "# ##  #     #      #  #  # #\n" 
-            <<      "# #*      *###  #  #  #  # #\n" 
-            <<      "# #########*    #  ####  # #\n" 
-            <<      "#            #  #*      *# #\n" 
-            <<      "############## *########## #\n"
-            <<      "#                          #\n"
-            <<      "#                          #\n"
-            <<      "#@                         #\n"
-            <<      "############################\n" << endl;
+            <<    "############################\n" 
+            <<    "#@     *  #                #\n" 
+            <<    "# #   ######  #### ####### #\n" 
+            <<    "# #*   #       #    ##     #\n" 
+            <<    "# ###  #  ######*    #*  # #\n" 
+            <<    "#   *#      ########  #  # #\n" 
+            <<    "# ##  #     #      #  #  # #\n" 
+            <<    "# #*      *###  #  #  #  # #\n" 
+            <<    "# #########*    #  ####  # #\n" 
+            <<    "#            #  #*      *# #\n" 
+            <<    "############## *########## #\n"
+            <<    "###   # # #  #    #    ##  #\n"
+            <<    "##   ###     ### ## # # #  #\n"
+            <<    "####           #  ##  #   !#\n"
+            <<    "############################\n" << endl;
+     
+     cout << "Map 2: " << endl << endl
+            <<    "############################\n" 
+            <<    "#!   ##     # ##############\n" 
+            <<    "##       #  #              #\n" 
+            <<    "### ######     ######## #  #\n" 
+            <<    "#####    #######    #   #  #\n" 
+            <<    "# ### ##         #  #   #  #\n" 
+            <<    "##    ## #########  #   #  #\n" 
+            <<    "##               ##  ###   #\n" 
+            <<    "###   ########    #        #\n" 
+            <<    "###  ########     ##########\n" 
+            <<    "### ####      ###   ##     #\n"
+            <<    "#####  # ##########    ### #\n"
+            <<    "######## ################# #\n"
+            <<    "#@                         #\n"
+            <<    "############################\n" << endl;
 }
 
-int timer(int min,int sec){
-    sec=0;
-    min=0;
-    for(sec=0;sec <=60;sec++){
-                  cout << min<< ":" << sec << endl;
-    if(sec == 60){           
-           min += 1;
-           sec=0;
-    }
+/*float timer(float sec,float min, bool sub){
+    sub == false;
+    for(sec = 0; sec >= 60;sec++){
+        if (sec == 60 && sub == false){
+            min += 1;
+            sec = 0;
         }
-                
-}
+        cout << min << " ; " << sec << endl;
+    }
+}*/
 
 //Function from Joshua Camacho don't credit for line count
 void clear(){
