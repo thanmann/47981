@@ -4,6 +4,7 @@
  * Project 2 Labyrinth
  */
 
+//Libraries
 #include <windows.h>
 #include <iomanip>
 #include <iostream>
@@ -45,9 +46,9 @@ unsigned char map2[30][30]=
                    {"############################", 
                     "#!   ##     # ##############", 
                     "##       #  #              #", 
-                    "### ######     ######## #  #", 
-                    "#####    #######    #   #  #", 
-                    "# ### ##         #  #   #  #", 
+                    "# # ######     ######## #  #", 
+                    "# ###    #######    #   #  #", 
+                    "#  ## ##         #  #   #  #", 
                     "##    ## #########  #   #  #", 
                     "##               ##  ###   #", 
                     "###   ########    #        #", 
@@ -62,6 +63,7 @@ void clear();
 float timer(float,float,bool);
 void LevelMenu();
 
+//Execution starts here
 int main(int argc, char** argv) {
     
     //Declare variables
@@ -70,6 +72,9 @@ int main(int argc, char** argv) {
     bool gameOver = false;
     int HP=0, MaxHp=100, gamespeed=100;
     char ans, choice;
+    time_t start = 0;
+    time_t end = 0;
+    time_t elapsed = 0;
     
     //Opens up file to save/load Times
     ofstream fout;
@@ -80,6 +85,7 @@ int main(int argc, char** argv) {
     
     
     do{
+           
         // Welcome/Explanation on Labyrinth
     cout << "The point of Labyrinth is to reach the end of the maze" << endl
                 << "while avoiding obstacles and keeping your HP above 0."
@@ -94,13 +100,15 @@ int main(int argc, char** argv) {
         fout << newPlayer << endl;
         LevelMenu();
         cin >> mChoice;
-        
+        start = time(NULL);      
     } else{
            LevelMenu();
            cin >> mChoice;
-}             
+           start = time(NULL);
+}   
+   //Arrow keys for Map 1
    while (gameOver == false && mChoice == 1){
-        for( int y=0;y<30;y++){
+       for( int y=0;y<30;y++){
            cout << map1[y] << endl;  
         }        
     for(int y = 0;y < 30;y++){
@@ -119,9 +127,9 @@ int main(int argc, char** argv) {
                   switch (map1[y2][x]){
                          case ' ':
                               {
-                                  map1[y][x] = ' ';
+                                  map1[y][x] = ' ';//old space
                                   y -= 1;
-                                  map1[y2][x]= '@';
+                                  map1[y2][x]= '@';//Occupies new space
                                   }break;
                       case '!':{
                           gameOver=true;
@@ -197,20 +205,16 @@ int main(int argc, char** argv) {
                 }
                 
                 }break;
-             }
-              for(int i = 0;i <= 60;i++){
-        sec = i;
-        min = 0;
-        if(sec == 60 || gameOver == false){
-            min += 1;           
-        }
-        
-    }
+             }          
          }
        }
+        end = time(NULL);
+        elapsed = end - start;      
     Sleep(gamespeed);
     clear();
     }
+    cout << "This is how long it took you: " << elapsed << " seconds" << endl << endl;
+    //Arrow Keys for Map 2
  while (gameOver == false && mChoice == 2){
         for( int y=0;y<30;y++){
            cout << map2[y] << endl;  
@@ -309,24 +313,16 @@ int main(int argc, char** argv) {
                 }
                 
                 }break;
-             }
-              for(int i = 0;i <= 60;i++){
-        sec = i;
-        min = 0;
-        if(sec == 60){
-            min++;
-            sec = 0;
-        }
-        
-    }
+             }      
          }
        }
+        end = time(NULL);
+        elapsed = end - start;
     Sleep(gamespeed);
     clear();
+    cout << "This is how long it took you: " << elapsed << " seconds" << endl << endl;
     }cout << "Would you like to play the game again?" << endl;
     cin >> ans;
-    cout << min << ":" << sec << endl;
-
  }while (ans == 'Y' || ans == 'y');
  
  return 0;
