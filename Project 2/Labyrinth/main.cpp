@@ -13,12 +13,12 @@
 #include <string>
 #include <cstdlib>
 //Function from Joshua Camacho don't credit for line count
-#ifdef _WIN32
+/*#ifdef _WIN32
 #endif
 #ifdef _WIN32
 static HANDLE                     hConsoleOutput = 0;
 static CONSOLE_SCREEN_BUFFER_INFO csbi;
-#endif
+#endif*/
 using namespace std;
 
 //Global Constants
@@ -59,7 +59,7 @@ unsigned char map2[30][30]=
                     "#@                         #",
                     "############################",};
 
-void clear();
+//void clear();
 float timer(float,float,bool);
 void LevelMenu();
 
@@ -70,7 +70,7 @@ int main(int argc, char** argv) {
     string newPlayer;
     int mChoice,sec,min;
     bool gameOver = false;
-    int HP=0, MaxHp=100, gamespeed=100;
+    int HP=100, MaxHP=100, gamespeed=100;
     char ans, choice;
     time_t start = 0;
     time_t end = 0;
@@ -95,6 +95,7 @@ int main(int argc, char** argv) {
     
     //Level choice for player
     if (choice == 'Y' || choice == 'y'){
+        cout << "The controls for the game are the arrow keys." << endl; //Controls
         cout << "What is your first name?" << endl;
         cin >> newPlayer;
         fout << newPlayer << endl;
@@ -102,24 +103,29 @@ int main(int argc, char** argv) {
         cin >> mChoice;
         start = time(NULL);      
     } else{
+         cout << "The controls for the game are the arrow keys." << endl; //Controls
            LevelMenu();
            cin >> mChoice;
            start = time(NULL);
 }   
    //Arrow keys for Map 1
    while (gameOver == false && mChoice == 1){
+       
        for( int y=0;y<30;y++){
            cout << map1[y] << endl;  
-        }        
+        }
+       
+       cout << "Time: " << time << endl;
+       cout << "HP:  " << HP << "/" << MaxHP << endl;
     for(int y = 0;y < 30;y++){
         for(int x = 0; x < 30;x++){
             
-
+            //Walls
             switch(map1[y][x]){
                   case '#':{
                       map1[y][x] = 219;
                   }
-              case '@':
+              case '@': //The Player
               { //Arrow Mapping for Up Key
                 if (GetAsyncKeyState (VK_UP) != 0){                    
                      int y2 = (y-1);
@@ -131,7 +137,7 @@ int main(int argc, char** argv) {
                                   y -= 1;
                                   map1[y2][x]= '@';//Occupies new space
                                   }break;
-                      case '!':{
+                      case '!':{//When the end is reached
                           gameOver=true;
                       }break;
                       case '*':{//Loss of HP
@@ -208,11 +214,11 @@ int main(int argc, char** argv) {
              }          
          }
        }
+       Sleep(gamespeed);
         end = time(NULL);
         elapsed = end - start;      
-    Sleep(gamespeed);
-    clear();
-    }
+    //clear();
+    }break;
     cout << "This is how long it took you: " << elapsed << " seconds" << endl << endl;
     //Arrow Keys for Map 2
  while (gameOver == false && mChoice == 2){
@@ -319,7 +325,7 @@ int main(int argc, char** argv) {
         end = time(NULL);
         elapsed = end - start;
     Sleep(gamespeed);
-    clear();
+    //clear();
     cout << "This is how long it took you: " << elapsed << " seconds" << endl << endl;
     }cout << "Would you like to play the game again?" << endl;
     cin >> ans;
@@ -365,7 +371,7 @@ void LevelMenu(){
             <<    "############################\n" << endl;
 }
 
-/*float timer(float sec,float min, bool sub){
+float timer(float sec,float min, bool sub){
     sub == false;
     for(sec = 0; sec >= 60;sec++){
         if (sec == 60 && sub == false){
@@ -374,10 +380,10 @@ void LevelMenu(){
         }
         cout << min << " ; " << sec << endl;
     }
-}*/
+}
 
 //Function from Joshua Camacho don't credit for line count
-void clear(){
+/*void clear(){
 
 #ifdef _WIN32
 	if ( hConsoleOutput == 0 )
@@ -405,4 +411,4 @@ void clear(){
 		 printf("\033[H\033[2J");
 #endif
 	 fflush(stdout);
-}
+}*/
