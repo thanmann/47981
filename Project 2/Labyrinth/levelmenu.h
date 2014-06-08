@@ -45,5 +45,8 @@ unsigned char map2[30][30]=
 
 
 void LevelMenu();
+<<<<<<< HEAD
 
+=======
+>>>>>>> cb6750f053d03ffd09c92119380663bc0216dc01
 void clear();
