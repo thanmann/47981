@@ -24,7 +24,7 @@ void storage(string &);
 void storage(string &playerName){
     
     char uChoice;
-    int &test;
+//    int &test;
     
     //Opens up file to save/load Times
     ofstream fout;
@@ -32,6 +32,9 @@ void storage(string &playerName){
     
     ifstream infile;
     infile.open ("SavedPlayers.txt");
+    
+    
+    
     
     //Prompt for new player
     cout << "Are you are new player to the game? Y or N" << endl;
