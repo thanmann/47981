@@ -1,24 +1,24 @@
 /*
  * Timothy Hanmann
  * November 22, 13
- * Project 2 Labyrinth
+ * Project 2 Labyrinth CSC 7
  */
 
 //Libraries
+#include "scoreboard.h"
+#include "levelmenu.h"
 #include <windows.h>
 #include <iomanip>
 #include <iostream>
 #include <ctime>
-#include <fstream>
-#include <string>
 #include <cstdlib>
 //Function from Joshua Camacho don't credit for line count
-/*#ifdef _WIN32
+#ifdef _WIN32
 #endif
 #ifdef _WIN32
 static HANDLE                     hConsoleOutput = 0;
 static CONSOLE_SCREEN_BUFFER_INFO csbi;
-#endif*/
+#endif
 using namespace std;
 
 //Global Constants
@@ -26,7 +26,7 @@ using namespace std;
 
 
 //Function Prototypes
-unsigned char map1[30][30]=  
+/*unsigned char map1[30][30]=  
                    {"############################",
                     "#@   #   *  #              #",
                     "# #   ######  #### ####### #",
@@ -59,34 +59,44 @@ unsigned char map2[30][30]=
                     "#@                         #",
                     "############################",};
 
-//void clear();
-float timer(float,float,bool);
-void LevelMenu();
+void clear();*/
+//float timer(float,float,bool);
+//void LevelMenu();
+void Scoreboard();
 
 //Execution starts here
 int main(int argc, char** argv) {
     
     //Declare variables
     string newPlayer;
-    int mChoice,sec,min;
-    bool gameOver = false;
+    int sec,min;
+     bool gameOver = false;
     int HP=100, MaxHP=100, gamespeed=100;
-    char ans, choice;
+    char ans,choice;
     time_t start = 0;
     time_t end = 0;
     time_t elapsed = 0;
+    vector<int> numPlayers;
+    string namePlayers;
     
-    //Opens up file to save/load Times
+    
+    
+    /*//Opens up file to save/load Times
     ofstream fout;
     fout.open("Save.dat", ios::app);
     
     ifstream infile;
     infile.open ("Save.dat");
+     */
     
     
     do{
+        
+    storage(namePlayers);
+    //fillBoard(numPlayers, namePlayers);
+    //printBoard(numPlayers, namePlayers);
            
-        // Welcome/Explanation on Labyrinth
+        /*// Welcome/Explanation on Labyrinth
     cout << "The point of Labyrinth is to reach the end of the maze" << endl
                 << "while avoiding obstacles and keeping your HP above 0."
                 << endl << endl << endl;
@@ -107,9 +117,9 @@ int main(int argc, char** argv) {
            LevelMenu();
            cin >> mChoice;
            start = time(NULL);
-}   
+}   */
    //Arrow keys for Map 1
-   while (gameOver == false && mChoice == 1){
+   while (gameOver == false && choice == 'Y' || choice == 'y'){
        
        for( int y=0;y<30;y++){
            cout << map1[y] << endl;  
@@ -215,13 +225,13 @@ int main(int argc, char** argv) {
          }
        }
        Sleep(gamespeed);
-        end = time(NULL);
-        elapsed = end - start;      
-    //clear();
-    }break;
-    cout << "This is how long it took you: " << elapsed << " seconds" << endl << endl;
+       // end = time(NULL);
+        //elapsed = end - start;      
+    clear();
+    }
+    //cout << "This is how long it took you: " << elapsed << " seconds" << endl << endl;
     //Arrow Keys for Map 2
- while (gameOver == false && mChoice == 2){
+ /*while (gameOver == false && mChoice == 2){
         for( int y=0;y<30;y++){
            cout << map2[y] << endl;  
         }        
@@ -319,22 +329,24 @@ int main(int argc, char** argv) {
                 }
                 
                 }break;
-             }      
+             }   *  
          }
        }
         end = time(NULL);
         elapsed = end - start;
     Sleep(gamespeed);
-    //clear();
+    clear();
     cout << "This is how long it took you: " << elapsed << " seconds" << endl << endl;
-    }cout << "Would you like to play the game again?" << endl;
-    cin >> ans;
+    }*///cout << "Would you like to play the game again?" << endl;
+   // cin >> ans;
  }while (ans == 'Y' || ans == 'y');
  
  return 0;
 }
 
-void LevelMenu(){
+
+
+/*void LevelMenu(){
      cout << "Which map would you like to choose?" << endl;
      cout << "Map 1: " << endl << endl
             <<    "############################\n" 
@@ -383,7 +395,7 @@ float timer(float sec,float min, bool sub){
 }
 
 //Function from Joshua Camacho don't credit for line count
-/*void clear(){
+void clear(){
 
 #ifdef _WIN32
 	if ( hConsoleOutput == 0 )
@@ -411,4 +423,5 @@ float timer(float sec,float min, bool sub){
 		 printf("\033[H\033[2J");
 #endif
 	 fflush(stdout);
-}*/
+}
+*/
