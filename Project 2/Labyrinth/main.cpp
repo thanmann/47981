@@ -305,6 +305,150 @@ int main(int argc, char** argv) {
  return 0;
 }
 
+//Function Definitions
+void storage(string &playerName){
+    
+    char uChoice;
+//    int &test;
+    
+    //Opens up file to save/load Times
+    ofstream fout;
+    fout.open("SavedPlayers.txt", ios::app);
+    
+    ifstream infile;
+    infile.open ("SavedPlayers.txt");
+    
+    
+    
+    
+    //Prompt for new player
+    cout << "Are you are new player to the game? Y or N" << endl;
+    cin >> uChoice;
+    
+    //If new player, adds you too save file
+     if(uChoice == 'Y' || uChoice == 'y'){
+            cout << "What is your name?" << endl;
+             cin >> playerName;
+             fout << playerName << endl;
+             LevelMenu();          
+        }else
+            cout << "What is your saved name?" << endl;
+            
+        }
+            
+        
+
+void fillBoard(vector<int>&numPlayers,string &playerName){
+    
+    char uChoice;
+ 
+    storage(playerName);
+    cout << "Are you are new player to the game? Y or N" << endl;
+    cin >> uChoice;
+    
+    switch(uChoice){
+        case 1: if (uChoice == 'Y' || uChoice == 'y'){
+            cout << "What is your name?" << endl;
+        }
+    }
+    
+     //Players name       
+    for(int i = 0;i < numPlayers.size();i++){
+        cout << endl << "Enter the names of players: ";
+        cin >> playerName;
+       
+    }
+    
+}
+
+void printBoard(vector<int>&numPlayers,string playerName){
+    
+    cout << "Scoreboard:  " << endl;     
+    for(int i = 0;i < numPlayers.size();i++){
+        for(int y = 0;y < numPlayers.size();y++){
+          cout << numPlayers[y] << " " << playerName[i] << endl;  
+        }
+        
+    }
+}
+
+
+void LevelMenu(){
+   
+    int mChoice, test;
+    char choice;
+    
+   // cout << test << endl;
+    cout << "Map 1: " << endl << endl
+            <<    "############################\n" 
+            <<    "#@     *  #                #\n" 
+            <<    "# #   ######  #### ####### #\n" 
+            <<    "# #*   #       #    ##     #\n" 
+            <<    "# ###  #  ######*    #*  # #\n" 
+            <<    "#   *#      ########  #  # #\n" 
+            <<    "# ##  #     #      #  #  # #\n" 
+            <<    "# #*      *###  #  #  #  # #\n" 
+            <<    "# #########*    #  ####  # #\n" 
+            <<    "#            #  #*      *# #\n" 
+            <<    "############## *########## #\n"
+            <<    "###   # # #  #    #    ##  #\n"
+            <<    "##   ###     ### ## # # #  #\n"
+            <<    "####           #  ##  #   !#\n"
+            <<    "############################\n" << endl;
+    
+    cout << "Which map would you like to choose?"<< endl;
+    cout << "Press 2 to view the 2nd map." << endl;
+    cin >> mChoice;
+    
+    
+    switch(mChoice){
+        case 1:    
+     cout << "Map 1: " << endl << endl
+            <<    "############################\n" 
+            <<    "#@     *  #                #\n" 
+            <<    "# #   ######  #### ####### #\n" 
+            <<    "# #*   #       #    ##     #\n" 
+            <<    "# ###  #  ######*    #*  # #\n" 
+            <<    "#   *#      ########  #  # #\n" 
+            <<    "# ##  #     #      #  #  # #\n" 
+            <<    "# #*      *###  #  #  #  # #\n" 
+            <<    "# #########*    #  ####  # #\n" 
+            <<    "#            #  #*      *# #\n" 
+            <<    "############## *########## #\n"
+            <<    "###   # # #  #    #    ##  #\n"
+            <<    "##   ###     ### ## # # #  #\n"
+            <<    "####           #  ##  #   !#\n"
+            <<    "############################\n" << endl;
+     if(choice == 'N' || choice == 'n'){
+     cout << "\nDo you choose this map? Type Y.";
+     cin >> choice;
+    }break;
+        case 2:       
+     cout << "Map 2: " << endl << endl
+            <<    "############################\n" 
+            <<    "#!   ##     # ##############\n" 
+            <<    "##       #  #              #\n" 
+            <<    "### ######     ######## #  #\n" 
+            <<    "#####    #######    #   #  #\n" 
+            <<    "# ### ##         #  #   #  #\n" 
+            <<    "##    ## #########  #   #  #\n" 
+            <<    "##               ##  ###   #\n" 
+            <<    "###   ########    #        #\n" 
+            <<    "###  ########     ##########\n" 
+            <<    "### ####      ###   ##     #\n"
+            <<    "#####  # ##########    ### #\n"
+            <<    "######## ################# #\n"
+            <<    "#@                         #\n"
+            <<    "############################\n" << endl;
+     if(choice == 'N' || choice == 'n'){
+     cout << "\nDo you choose this map? Type Y.";
+     cin >> choice;
+     }break;
+        default: cout << "That is not a map choice." << endl;
+        break;
+  }
+}
+  
 
 
 float timer(float sec,float min, bool sub){
