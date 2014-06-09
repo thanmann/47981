@@ -1,11 +1,12 @@
 /*
- * Code for Scoreboard
+ * scoreboard.h prototypes
  */
 
 //Libraries
 #pragma once
 #include "levelmenu.h"
 #include<iostream>
+#include<windows.h>
 #include<vector>
 #include<string>
 #include<fstream>
@@ -15,14 +16,14 @@
 using namespace std;
 
 //Function Prototypes
-void fillBoard(vector<int>&,string&);
+void fillBoard(vector<int>&,string&);//
 
-<<<<<<< HEAD
 void sortBoard(vector<int>&,string);
 
 void printBoard(vector<int>&,string);
 
-void storage(string &);
+void storage(); //stores players name/specific map times
 
-=======
->>>>>>> cb6750f053d03ffd09c92119380663bc0216dc01
+float timer(float,float,bool); //timer for how long it takes player
+                               //to finish maze
+

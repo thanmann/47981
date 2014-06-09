@@ -7,11 +7,6 @@
 //Libraries
 #include "scoreboard.h"
 #include "levelmenu.h"
-#include <windows.h>
-#include <iomanip>
-#include <iostream>
-#include <ctime>
-#include <cstdlib>
 //Function from Joshua Camacho don't credit for line count
 #ifdef _WIN32
 #endif
@@ -24,69 +19,59 @@ using namespace std;
 //Global Constants
 
 
-
-//Function Prototypes
-void clear();
-//float timer(float,float,bool);
-//void LevelMenu();
-void Scoreboard();
-
 //Execution starts here
 int main(int argc, char** argv) {
     
     //Declare variables
-    string newPlayer;
-    int sec,min;
+    string playerName;
+    int sec, min, mChoice;
      bool gameOver = false;
     int HP=100, MaxHP=100, gamespeed=100;
-    char ans,choice;
+    char ans,uChoice;
     time_t start = 0;
     time_t end = 0;
     time_t elapsed = 0;
     vector<int> numPlayers;
     string namePlayers;
     
+    //Opens up file to save/load Times
+    ofstream fout;
+    fout.open("SavedPlayers.txt", ios::app);
     
+    ifstream infile;
+    infile.open ("SavedPlayers.txt");
     
-
-    
-    
-    do{
-        
-    storage(namePlayers);
     //fillBoard(numPlayers, namePlayers);
     //printBoard(numPlayers, namePlayers);
-           
-        /*// Welcome/Explanation on Labyrinth
-    cout << "The point of Labyrinth is to reach the end of the maze" << endl
-                << "while avoiding obstacles and keeping your HP above 0."
-                << endl << endl << endl;
-    cout << "Are you new to the game?" << endl;
-    cin >> choice;
     
-    //Level choice for player
-    if (choice == 'Y' || choice == 'y'){
-        cout << "The controls for the game are the arrow keys." << endl; //Controls
-        cout << "What is your first name?" << endl;
-        cin >> newPlayer;
-        fout << newPlayer << endl;
-        LevelMenu();
-        cin >> mChoice;
-        start = time(NULL);      
-    } else{
-         cout << "The controls for the game are the arrow keys." << endl; //Controls
-           LevelMenu();
-           cin >> mChoice;
-           start = time(NULL);
-}   */
+     do{     
+      
+    //Prompt for new player
+    cout << "Are you a new player to the game? Y or N" << endl;
+    cin >> uChoice;
+    
+    //If new player, adds you too save file
+     if(uChoice == 'Y' || uChoice == 'y'){
+        // storage();
+            cout << "What is your name?" << endl;
+             cin >> playerName;
+             fout << playerName << endl;
+             LevelMenu();     
+             cout << "The controls for the game are the arrow keys." << endl; //Controls  
+             cin >> mChoice;
+        }else
+            cout << "What is your saved name?" << endl;
+    LevelMenu();
+    cin >> mChoice;
+    
    //Arrow keys for Map 1
-   while (gameOver == false && choice == 'Y' || choice == 'y'){
-       
+   while (gameOver == false && mChoice == 1){
+      //clear();
+       start = time(NULL);
        for( int y=0;y<30;y++){
-           cout << map1[y] << endl;  
-        }
-       
-       cout << "Time: " << time << endl;
+           cout << map1[y] << endl;
+        }  
+              cout << "Time: " << time << endl;
        cout << "HP:  " << HP << "/" << MaxHP << endl;
     for(int y = 0;y < 30;y++){
         for(int x = 0; x < 30;x++){
@@ -183,12 +168,12 @@ int main(int argc, char** argv) {
                 
                 }break;
              }          
-         }
+         }clear();
        }
        Sleep(gamespeed);
-       // end = time(NULL);
-        //elapsed = end - start;      
-    clear();
+        end = time(NULL);
+        elapsed = end - start;      
+    
     }
     //cout << "This is how long it took you: " << elapsed << " seconds" << endl << endl;
     //Arrow Keys for Map 2
@@ -306,43 +291,15 @@ int main(int argc, char** argv) {
 }
 
 //Function Definitions
-void storage(string &playerName){
-    
-    char uChoice;
-//    int &test;
-    
-    //Opens up file to save/load Times
-    ofstream fout;
-    fout.open("SavedPlayers.txt", ios::app);
-    
-    ifstream infile;
-    infile.open ("SavedPlayers.txt");
-    
-    
-    
-    
-    //Prompt for new player
-    cout << "Are you are new player to the game? Y or N" << endl;
-    cin >> uChoice;
-    
-    //If new player, adds you too save file
-     if(uChoice == 'Y' || uChoice == 'y'){
-            cout << "What is your name?" << endl;
-             cin >> playerName;
-             fout << playerName << endl;
-             LevelMenu();          
-        }else
-            cout << "What is your saved name?" << endl;
-            
-        }
-            
-        
+/*void storage(){
 
-void fillBoard(vector<int>&numPlayers,string &playerName){
+}*/
+      
+/*void fillBoard(vector<int>&numPlayers,string &playerName){
     
     char uChoice;
  
-    storage(playerName);
+    storage();
     cout << "Are you are new player to the game? Y or N" << endl;
     cin >> uChoice;
     
@@ -359,7 +316,7 @@ void fillBoard(vector<int>&numPlayers,string &playerName){
        
     }
     
-}
+}*/
 
 void printBoard(vector<int>&numPlayers,string playerName){
     
@@ -372,13 +329,14 @@ void printBoard(vector<int>&numPlayers,string playerName){
     }
 }
 
-
 void LevelMenu(){
    
     int mChoice, test;
     char choice;
     
    // cout << test << endl;
+    
+    cout << "Would you like to choose this map?"<< endl;
     cout << "Map 1: " << endl << endl
             <<    "############################\n" 
             <<    "#@     *  #                #\n" 
@@ -395,14 +353,13 @@ void LevelMenu(){
             <<    "##   ###     ### ## # # #  #\n"
             <<    "####           #  ##  #   !#\n"
             <<    "############################\n" << endl;
-    
-    cout << "Which map would you like to choose?"<< endl;
-    cout << "Press 2 to view the 2nd map." << endl;
+    cout << "Press 2 to view the other map or press 1 to keep this map." << endl;
+   // cout << "Press Y "
     cin >> mChoice;
     
-    
     switch(mChoice){
-        case 1:    
+        case 1: 
+        //showcases the map to the user    
      cout << "Map 1: " << endl << endl
             <<    "############################\n" 
             <<    "#@     *  #                #\n" 
@@ -419,11 +376,11 @@ void LevelMenu(){
             <<    "##   ###     ### ## # # #  #\n"
             <<    "####           #  ##  #   !#\n"
             <<    "############################\n" << endl;
-     if(choice == 'N' || choice == 'n'){
-     cout << "\nDo you choose this map? Type Y.";
+     //asks if user wants to pick map or choose a new one
+      cout << "\nDo you choose this map? Type Y.";
      cin >> choice;
-    }break;
-        case 2:       
+     break;
+        case 2:         
      cout << "Map 2: " << endl << endl
             <<    "############################\n" 
             <<    "#!   ##     # ##############\n" 
@@ -440,18 +397,17 @@ void LevelMenu(){
             <<    "######## ################# #\n"
             <<    "#@                         #\n"
             <<    "############################\n" << endl;
-     if(choice == 'N' || choice == 'n'){
      cout << "\nDo you choose this map? Type Y.";
      cin >> choice;
-     }break;
+     break;
         default: cout << "That is not a map choice." << endl;
         break;
   }
 }
   
 
-
 float timer(float sec,float min, bool sub){
+    
     sub == false;
     for(sec = 0; sec >= 60;sec++){
         if (sec == 60 && sub == false){
@@ -492,3 +448,16 @@ void clear(){
 #endif
 	 fflush(stdout);
 }
+
+/*if (choice == 'Y' || choice == 'y'){
+         LevelMenu();
+        cout << "The controls for the game are the arrow keys." << endl; //Controls
+        cin >> mChoice;
+        start = time(NULL);      
+    } else{
+         cout << "The controls for the game are the arrow keys." << endl; //Controls
+           LevelMenu();
+           cin >> mChoice;
+           start = time(NULL);
+            
+        } */  
